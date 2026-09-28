@@ -1,0 +1,727 @@
+/* ============================================
+   MC PULSE — التصميم الكامل
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --emerald: #00ff88;
+  --emerald-dark: #00b85f;
+  --gold: #ffb800;
+  --red: #ff3b3b;
+  --bg: #05060d;
+  --card: rgba(20, 25, 45, 0.65);
+  --border: rgba(0, 255, 136, 0.15);
+  --text: #ffffff;
+  --text-dim: #8892b0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* ============================================
+   الخلفية المتحركة
+   ============================================ */
+
+.bg-layer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, black 20%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 40%, black 20%, transparent 75%);
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 60px 60px;
+  }
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  -webkit-filter: blur(100px);
+  filter: blur(100px);
+  opacity: 0.5;
+}
+
+.glow-1 {
+  width: 500px;
+  height: 500px;
+  background: var(--emerald);
+  top: -150px;
+  right: -150px;
+  animation: float1 12s ease-in-out infinite;
+}
+
+.glow-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--gold);
+  bottom: -100px;
+  left: -100px;
+  animation: float2 15s ease-in-out infinite;
+  opacity: 0.35;
+}
+
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50px, 50px) scale(1.15);
+  }
+}
+
+@keyframes float2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(60px, -40px) scale(1.2);
+  }
+}
+
+.particles {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--emerald);
+  animation: rise linear infinite;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   الهيدر
+   ============================================ */
+
+header {
+  padding: 20px 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px;
+  background: rgba(10, 14, 26, 0.5);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  border-radius: 10px;
+  font-size: 24px;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 255, 136, 1);
+  }
+}
+
+.logo-name {
+  background: linear-gradient(135deg, #fff 0%, var(--emerald) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--emerald);
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ============================================
+   الهيرو
+   ============================================ */
+
+.hero {
+  text-align: center;
+  padding: 60px 24px 30px;
+  position: relative;
+  z-index: 5;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(255, 184, 0, 0.08);
+  border: 1px solid rgba(255, 184, 0, 0.3);
+  border-radius: 50px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 6vw, 62px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--emerald), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.hero p {
+  color: var(--text-dim);
+  font-size: 17px;
+  max-width: 620px;
+  margin: 0 auto;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+/* ============================================
+   الرسالة الدافئة
+   ============================================ */
+
+.warm-message {
+  text-align: center;
+  margin: 30px auto 0;
+  max-width: 500px;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(255, 184, 0, 0.05));
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--emerald);
+  position: relative;
+  animation: fadeUp 0.9s 0.3s ease both;
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   الحاوية
+   ============================================ */
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+  position: relative;
+  z-index: 5;
+}
+
+/* ============================================
+   الكارت الرئيسي
+   ============================================ */
+
+.main-card {
+  background: var(--card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 255, 136, 0.05) inset;
+  animation: fadeUp 0.9s 0.4s ease both;
+}
+
+.main-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--emerald), var(--gold), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.card-icon {
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.05));
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 16px;
+  font-size: 34px;
+  flex-shrink: 0;
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+}
+
+.card-titles h2 {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.card-titles .meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  padding: 3px 10px;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 6px;
+  color: var(--emerald);
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   الخطوات
+   ============================================ */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.step {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.step:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  transform: translateY(-3px);
+  background: rgba(0, 255, 136, 0.04);
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  color: #000;
+  border-radius: 50%;
+  font-weight: 900;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.step-text {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.step-text strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+/* ============================================
+   الأزرار
+   ============================================ */
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 17px;
+  font-family: 'Cairo', sans-serif;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-yt {
+  background: linear-gradient(135deg, #ff3b3b, #cc0000);
+  color: white;
+  box-shadow:
+    0 8px 30px rgba(255, 59, 59, 0.4),
+    0 0 0 1px rgba(255, 59, 59, 0.5) inset;
+}
+
+.btn-yt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.btn-yt:hover::before {
+  left: 100%;
+}
+
+.btn-yt:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 45px rgba(255, 59, 59, 0.6);
+}
+
+.btn-dl {
+  background: rgba(255, 255, 255, 0.03);
+  color: #4a5570;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+}
+
+.btn-dl .lock-icon {
+  font-size: 18px;
+}
+
+.btn-dl.ready {
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  color: #000;
+  border: 2px solid var(--emerald);
+  cursor: pointer;
+  box-shadow:
+    0 10px 40px rgba(0, 255, 136, 0.5),
+    0 0 60px rgba(0, 255, 136, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+  animation: unlockPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes unlockPulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 40px rgba(0, 255, 136, 0.5), 0 0 60px rgba(0, 255, 136, 0.3);
+  }
+  50% {
+    box-shadow: 0 10px 50px rgba(0, 255, 136, 0.9), 0 0 90px rgba(0, 255, 136, 0.6);
+  }
+}
+
+.btn-dl.ready:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* ============================================
+   الحالة
+   ============================================ */
+
+.status-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 8px;
+  min-height: 24px;
+  font-weight: 700;
+  color: var(--gold);
+  transition: all 0.3s;
+}
+
+.status-text.success {
+  color: var(--emerald);
+  font-size: 15px;
+  animation: successPop 0.5s ease;
+}
+
+@keyframes successPop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   الإحصائيات
+   ============================================ */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat {
+  text-align: center;
+  padding: 12px 6px;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--emerald);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   الفوتر
+   ============================================ */
+
+footer {
+  text-align: center;
+  padding: 30px 24px 40px;
+  color: var(--text-dim);
+  font-size: 13px;
+  position: relative;
+  z-index: 5;
+}
+
+footer strong {
+  background: linear-gradient(135deg, var(--emerald), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 900;
+}
+
+/* ============================================
+   الجوال
+   ============================================ */
+
+@media (max-width: 600px) {
+  .header-inner {
+    padding: 12px 16px;
+    border-radius: 14px;
+  }
+  .logo {
+    font-size: 20px;
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+  .status-pill {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  .hero {
+    padding: 40px 20px 20px;
+  }
+  .warm-message {
+    font-size: 15px;
+    padding: 14px 18px;
+    margin-top: 22px;
+  }
+  .main-card {
+    padding: 28px 20px;
+    border-radius: 20px;
+  }
+  .card-head {
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+  .card-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
+  .btn {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+  .step {
+    padding: 14px 10px;
+  }
+  .step-text {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MC Pulse — تحميل Minecraft</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 🎨 الخلفية -->
+<div class="bg-layer">
+  <div class="bg-grid"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<!-- 🏷️ الهيدر -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">⛏️</div>
+      <span class="logo-name">MC PULSE</span>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Online
+    </div>
+  </div>
+</header>
+
+<!-- 🌟 الهيرو -->
+<section class="hero">
+  <div class="hero-badge">
+    ⚡ الإصدار الأخير متوفر الآن
+  </div>
+  <h1>
+    تحميل <span class="highlight">Minecraft</span><br>
+    بأقوى إصدار
+  </h1>
+
+  <!-- 💚 الرسالة الدافئة -->
+  <div class="warm-message">
+    💚 اشترك، وكن جزءاً من العائلة
+  </div>
+</section>
+
+<!-- 💎 المحتوى -->
+<div class="container">
+  <div class="main-card">
+
+    <div class="card-head">
+      <div class="card-icon">🎮</div>
+      <div class="card-titles">
+        <h2>Minecraft</h2>
+        <div class="meta">
+          <span class="meta-tag">V1.0</span>
+          <span>آخر تحديث: 2025</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <strong>اضغط الزر الأحمر</strong>
+          لفتح القناة
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <strong>اشترك في القناة</strong>
+          اشتراك واحد فقط
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <strong>ارجع للصفحة</strong>
+          سيُفتح التحميل تلقائياً
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔴 رابط قناتك -->
+    <a href="https://www.youtube.com/@MCPulse666?sub_confirmation=1"
+       target="_blank"
+       class="btn btn-yt"
+       id="ytBtn">
+       <span>🔔</span> اشترك في القناة
+    </a>
+
+    <!-- 🟢 رابط MediaFire -->
+    <a href="https://www.mediafire.com/file/9k8evvfsixcdado/minecraft-1.26.51.1-by-mc_Pulse.apk/file"
+       id="downloadBtn"
+       class="btn btn-dl"
+       target="_blank">
+       <span class="lock-icon">🔒</span>
+       <span id="dlText">زر التحميل مقفل</span>
+    </a>
+
+    <div class="status-text" id="status"></div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">V1.0</div>
+        <div class="stat-label">الإصدار</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">آمن</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">⚡</div>
+        <div class="stat-label">سريع</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2025 <strong>MC PULSE</strong> — جميع الحقوق محفوظة
+</footer>
+
+<script>
+  /* ===== الجزيئات ===== */
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    p.style.opacity = 0.2 + Math.random() * 0.6;
+    const size = 1.5 + Math.random() * 2.5;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    if (Math.random() > 0.7) {
+      p.style.background = '#ffb800';
+      p.style.boxShadow = '0 0 10px #ffb800';
+    }
+    particlesContainer.appendChild(p);
+  }
+
+  /* ===== منطق التحميل ===== */
+  const ytBtn = document.getElementById('ytBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const status = document.getElementById('status');
+  const dlText = document.getElementById('dlText');
+  let unlocked = false;
+
+  downloadBtn.addEventListener('click', (e) => {
+    if (!unlocked) e.preventDefault();
+  });
+
+  ytBtn.addEventListener('click', () => {
+    status.textContent = '⏳ في انتظار عودتك من يوتيوب...';
+    status.classList.remove('success');
+
+    window.addEventListener('focus', unlock, { once: true });
+    document.addEventListener('visibilitychange', function handler() {
+      if (document.visibilityState === 'visible') {
+        unlock();
+        document.removeEventListener('visibilitychange', handler);
+      }
+    });
+  });
+
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+
+    setTimeout(() => {
+      downloadBtn.classList.add('ready');
+      dlText.textContent = '⬇️ تحميل Minecraft الآن';
+      downloadBtn.querySelector('.lock-icon').textContent = '⬇️';
+      status.textContent = '✅ تم فتح التحميل — شكراً لاشتراكك!';
+      status.classList.add('success');
+    }, 500);
+  }
+</script>
+
+</body>
+</html>
