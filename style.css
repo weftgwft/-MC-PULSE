@@ -725,3 +725,55 @@ footer strong {
     font-size: 12px;
   }
 }
+/* ============================================
+   الصور الجديدة
+   ============================================ */
+
+/* 🖼️ صورة خلفية الموقع (اختياري) */
+.bg-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+  filter: blur(2px);
+  z-index: 0;
+}
+
+/* 🖼️ شعار في الهيدر */
+.logo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 10px;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.6));
+  animation: logoPulse 2.5s ease-in-out infinite;
+}
+
+/* 🖼️ صورة اللعبة في الكارت */
+.card-img {
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+  flex-shrink: 0;
+}
+
+/* 📱 الجوال */
+@media (max-width: 600px) {
+  .logo-img {
+    width: 36px;
+    height: 36px;
+  }
+  .card-img {
+    width: 60px;
+    height: 60px;
+  }
+}
